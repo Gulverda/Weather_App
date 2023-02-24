@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Temperature Hot</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://kit.fontawesome.com/1001098421.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+      <h1>Weather App</h1>
+      <div class="search-box">
+        <input type="text" placeholder="Enter city name" id="search-input">
+        <button id="search-btn"><i class='bx bx-search-alt'></i></button>
+      </div>
+      <div class="weather-box">
+        <div class="location" id="location"></div>
+        <div class="temperature" id="temperature"></div>
+        <div class="icon" id="icon"></div>
+        <div class="description" id="description"></div>
+        <div class="date">
+            <div class="day" id="day"></div>
+            <div class="date1" id="date"></div>
+        </div>
+        <div class="date-and-time">
+            <div class="clock">
+                <div class="time" id="current-time"></div>
+            </div>
+            <div class="day">
+                <div class="day" id="day"></div>
+            </div>
+            <div class="days">
+                <div class="day" id="day1"></div>
+                <div class="day" id="day2"></div>
+                <div class="day" id="day3"></div>
+                <div class="day" id="day4"></div>
+                <div class="day" id="day5"></div>
+            </div>
+            <div class="month">
+                <div class="month" id="month"></div>
+            </div>
+            <div class="year">
+                <div class="year" id="year"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+<script src="app.js"></script>
+</body>
+
+</html>

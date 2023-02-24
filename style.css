@@ -1,0 +1,258 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Cabin", sans-serif;
+  background-image: url("https://source.unsplash.com/1600x900/?landscape");
+  background-size: cover;
+  height: 100vh;
+}
+
+.container {
+  margin: 0 auto;
+  height: 700px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(67, 66, 73, 0.432) 0%, #080101 100%);
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-top: 60px;
+  color: #fff;
+}
+
+.search-box {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 20%;
+}
+
+#search-input {
+  padding: 10px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  width: 700px;
+  background: transparent;
+  border: 2px solid #f0f0f0;
+}
+
+#search-btn {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  margin-left: -65px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  background: none;
+}
+
+.weather-box {
+  margin-top: 50px;
+}
+
+.location {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.search-box {
+  margin-top: 30px;
+}
+.search-box button {
+  margin-left: -5px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.weather-box .location {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #fff;
+}
+.weather-box .temperature {
+  font-size: 5rem;
+  margin-top: 10px;
+  color: #fff;
+}
+.weather-box .icon {
+  font-size: 3rem;
+  margin-top: 10px;
+  color: #fff;
+}
+.weather-box .description {
+  font-size: 2rem;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.date {
+  opacity: 0.8;
+  color: #ffffff;
+  font-size: 40px;
+  width: auto;
+  height: 120px;
+  position: fixed;
+  text-align: center;
+  top: 77%;
+  -webkit-backdrop-filter: blur(35.7 0.5px);
+          backdrop-filter: blur(35.7 0.5px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 5px;
+}
+
+.clock {
+  opacity: 0.8;
+  color: #ffffff;
+  font-size: 50px;
+  width: 20%;
+  height: 65px;
+  position: fixed;
+  top: 87%;
+  left: -1%;
+  text-align: center;
+  -webkit-backdrop-filter: blur(35.7 0.5px);
+          backdrop-filter: blur(35.7 0.5px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 5px;
+}
+
+.search-top {
+  top: -21%;
+}
+.search-top #search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+.search-top ::-moz-placeholder {
+  color: #fff;
+}
+.search-top ::placeholder {
+  color: #fff;
+}
+.search-top #search-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+
+@media screen and (max-width: 760px) {
+  .container {
+    height: 100vh;
+  }
+  .date {
+    top: 80%;
+    left: 37%;
+    font-size: 20px;
+  }
+  .clock {
+    top: 90%;
+    left: 40%;
+    font-size: 20px;
+  }
+  .search-box {
+    top: 5%;
+  }
+  .container h1 {
+    font-size: 1.5rem;
+    margin-top: 80px;
+  }
+  .weather-box {
+    margin-top: -10px;
+  }
+  .weather-box .location {
+    font-size: 20px;
+    margin-top: -50px;
+  }
+  .weather-box .temperature {
+    font-size: 30px;
+    margin-top: 0px;
+  }
+  .weather-box .icon {
+    font-size: 30px;
+    margin-top: 0px;
+  }
+  .weather-box .description {
+    font-size: 10px;
+    margin-top: 0px;
+    margin-top: 0px;
+  }
+  .search-top {
+    top: -29%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .container {
+    height: 100vh;
+  }
+  .search-box {
+    width: 100%;
+    top: 25%;
+  }
+  #search-input {
+    width: 100%;
+  }
+  #search-btn {
+    margin-left: 0;
+  }
+  .weather-box {
+    margin-top: 50px;
+  }
+  .weather-box .location {
+    font-size: 2rem;
+  }
+  .weather-box .temperature {
+    font-size: 4rem;
+  }
+  .weather-box .icon {
+    font-size: 1rem;
+  }
+  .weather-box .description {
+    font-size: 20px;
+  }
+  .date {
+    top: 75%;
+    left: 20%;
+    font-size: 30px;
+  }
+  .clock {
+    top: 85%;
+    left: 38%;
+    font-size: 30px;
+  }
+  .search-top {
+    top: -20%;
+  }
+  .container h1 {
+    font-size: 2rem;
+    margin-top: 150px;
+  }
+}/*# sourceMappingURL=style.css.map */
