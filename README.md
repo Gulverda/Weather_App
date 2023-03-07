@@ -30,6 +30,13 @@ Dedicated and detail-oriented junior Front end Developer. Competent to carry out
 ![InternetShortcut](https://cdn.discordapp.com/attachments/748660175467970603/1082679996490973285/image.png)
 
 
+## Run Locally
+
+For LIVE
+
+Live: https://gulverda.github.io/Weather_App/
+
+
 ## API Reference
 
 #### Get all items
@@ -61,11 +68,4 @@ Dedicated and detail-oriented junior Front end Developer. Competent to carry out
 | Background Color | ![#080101](https://via.placeholder.com/10/080101?text=+) linear-gradient(180deg, rgba(67, 66, 73, 0.432) 0%,  #080101 100%) |
 | Text Color | ![#fff](https://via.placeholder.com/10/fff?text=+) #fff |
 | Border Color | ![#f0f0f0](https://via.placeholder.com/10/f0f0f?text=+) #f0f0f0 |
-
-
-## Run Locally
-
-For LIVE
-
-Live: https://gulverda.github.io/Weather_App/
 
