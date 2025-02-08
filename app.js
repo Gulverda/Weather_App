@@ -1,84 +1,141 @@
-const apiKey = `14951c93f3d11e8ac8bed96dd90e8bc7`; // replace with your OpenWeatherMap API key
-
-const searchBox = document.querySelector('.search-box');
-const searchInput = document.getElementById('search-input');
-const searchBtn = document.getElementById('search-btn');
+const apiKey = '14951c93f3d11e8ac8bed96dd90e8bc7'; // Replace with your API key
 const locationEl = document.getElementById('location');
 const temperatureEl = document.getElementById('temperature');
-const iconEl = document.getElementById('icon');
 const descriptionEl = document.getElementById('description');
-const currentTime = document.getElementById('current-time');
-const date = document.getElementById('date');
-const day = document.getElementById('day');
-const month = document.getElementById('month');
-const year = document.getElementById('year');
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const highTempEl = document.getElementById('high-temp');
+const lowTempEl = document.getElementById('low-temp');
+const iconEl = document.getElementById('icon');
+const hourlyForecastEl = document.getElementById('hourly-forecast');
+const weeklyForecastEl = document.getElementById('weekly-forecast');
+const cityInput = document.getElementById('city-input');
+const searchButton = document.getElementById('search-button');
 
-searchBtn.addEventListener('click', () => {
-  const searchValue = searchInput.value;
-  if (searchValue) {
-    getWeatherData(searchValue);
-  }
+// Event listener for search button
+searchButton.addEventListener('click', function() {
+    const city = cityInput.value.trim();
+    if (city) {
+        fetchWeatherData(city);
+    } else {
+        alert("Please enter a city name.");
+    }
 });
 
+// Fetch weather data for the city
+async function fetchWeatherData(city) {
+    try {
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+        const data = await response.json();
 
-async function getWeatherData(city) {
-  const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  try {
-    const response = await fetch(apiURL);
-    const data = await response.json();
-    console.log(data);
+        if (data.cod === "404") {
+            alert("City not found. Please check the city name.");
+            return;
+        }
 
-    locationEl.textContent = `${data.name}, ${data.sys.country}`;
-    temperatureEl.textContent = `${Math.round(data.main.temp)}°C`;
-    iconEl.innerHTML = `<img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png">`;
-    descriptionEl.textContent = data.weather[0].description;
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getWeatherData(city) {
-  const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  try {
-    const response = await fetch(apiURL);
-    const data = await response.json();
-    console.log(data);
+        // Update the weather information
+        locationEl.textContent = `${data.name}, ${data.sys.country}`;
+        temperatureEl.textContent = `${Math.round(data.main.temp)}°C`;
+        descriptionEl.textContent = data.weather[0].description;
+        highTempEl.textContent = `${Math.round(data.main.temp_max)}°C`;
+        lowTempEl.textContent = `${Math.round(data.main.temp_min)}°C`;
+        iconEl.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png">`;
 
-    locationEl.textContent = `${data.name}, ${data.sys.country}`;
-    temperatureEl.textContent = `${Math.round(data.main.temp)}°C`;
-    iconEl.innerHTML = `<img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png">`;
-    descriptionEl.textContent = data.weather[0].description;
-
-    // add a class to the search bar to move it to the top of the page
-    searchBox.classList.add('search-top');
-  } catch (error) {
-    console.log(error);
-  }
+        // Fetch hourly and weekly forecasts
+        fetchHourlyForecast(data.coord.lat, data.coord.lon);
+        fetchWeeklyForecast(data.coord.lat, data.coord.lon);
+    } catch (error) {
+        console.error("Error fetching weather data:", error);
+    }
 }
 
+// Fetch hourly weather forecast
+async function fetchHourlyForecast(lat, lon) {
+    try {
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+        );
+        const data = await response.json();
 
-// clock settings
-function updateCurrentTime() {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-    const currentTime = `${hours}:${minutes}:${seconds}`;
-    document.getElementById("current-time").textContent = currentTime;
+        hourlyForecastEl.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+            const hourData = data.list[i];
+            const time = new Date(hourData.dt * 1000).getHours();
+            const temp = Math.round(hourData.main.temp);
+            const icon = hourData.weather[0].icon;
+
+            hourlyForecastEl.innerHTML += `
+                <div>
+                    <p>${time}:00</p>
+                    <img src="https://openweathermap.org/img/wn/${icon}.png">
+                    <p>${temp}°C</p>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error("Error fetching hourly forecast:", error);
+    }
 }
-  
-updateCurrentTime(); // set initial value
-setInterval(updateCurrentTime, 1000); // update every second
 
-function updateCurrentDate() {
-    const now = new Date();
-    const day = days[now.getDay()];
-    const date = now.getDate();
-    const month = now.getMonth() + 1;
-    const year = now.getFullYear();
-    const currentDate = `${day}, ${date}/${month}/${year}`;
-    document.getElementById("date").textContent = currentDate;
+// Fetch weekly weather forecast using the correct API endpoint
+async function fetchWeeklyForecast(lat, lon) {
+    try {
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=${apiKey}&units=metric`
+        );
+        const data = await response.json();
+
+        weeklyForecastEl.innerHTML = '';
+        data.daily.forEach((day, index) => {
+            const date = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' });
+            const temp = Math.round(day.temp.day);
+            const icon = day.weather[0].icon;
+
+            weeklyForecastEl.innerHTML += `
+                <div class="day-forecast">
+                    <p>${date}</p>
+                    <img src="https://openweathermap.org/img/wn/${icon}.png">
+                    <p>${temp}°C</p>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Error fetching weekly forecast:", error);
+    }
 }
 
-updateCurrentDate(); // set initial value
-setInterval(updateCurrentDate, 1000); // update every second
+// Get user's current location and fetch weather data for it
+function getCurrentLocationWeather() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            try {
+                // Fetch weather data for current location using lat, lon
+                const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+                );
+                const data = await response.json();
+                
+                locationEl.textContent = `${data.name}, ${data.sys.country}`;
+                temperatureEl.textContent = `${Math.round(data.main.temp)}°C`;
+                descriptionEl.textContent = data.weather[0].description;
+                highTempEl.textContent = `${Math.round(data.main.temp_max)}°C`;
+                lowTempEl.textContent = `${Math.round(data.main.temp_min)}°C`;
+                iconEl.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png">`;
+
+                // Fetch hourly and weekly forecasts
+                fetchHourlyForecast(data.coord.lat, data.coord.lon);
+                fetchWeeklyForecast(data.coord.lat, data.coord.lon);
+            } catch (error) {
+                console.error("Error fetching weather data for current location:", error);
+            }
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+// Call the function to fetch weather for current location on page load
+getCurrentLocationWeather();
