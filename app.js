@@ -1,4 +1,5 @@
-const apiKey = '14951c93f3d11e8ac8bed96dd90e8bc7'; // Replace with your API key
+const apiKey = process.env.APP_API_KEY;
+
 const locationEl = document.getElementById('location');
 const temperatureEl = document.getElementById('temperature');
 const descriptionEl = document.getElementById('description');
